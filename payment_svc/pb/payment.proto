@@ -1,0 +1,52 @@
+syntax="proto3";
+
+option go_package="./pb";
+
+service PaymentService{
+    rpc PaymentMethodID(PaymentMethodIdReq) returns (PaymentmethodIdRes) {};
+    rpc PaymentAlreadyPaid(PAPreq) returns (PapRes) {};
+    rpc MakePaymentRazorPay(MprReq) returns (MprRes) {};
+    rpc VerifyPayment(VpReq) returns (VpRes) {};
+}
+
+message PaymentMethodIdReq{
+    int64 OrderId=1;
+}
+
+message PaymentmethodIdRes{
+    int64 Paymentid=1;
+}
+
+message PAPreq{
+    int64 OrderId=1;
+}
+
+message PapRes{
+    bool Status=1;
+}
+
+message MprReq{
+    int64 OrderId=1;
+}
+
+message MprRes{
+    float TotalPrice=1;
+    float FinalPrice=2;
+    string Username=3;
+    string Phone=4;
+    string RzpayOID=5;
+}
+
+message VpReq{
+    string PaymentId=1;
+    string OrderId=2;
+    string Signature=3;
+    int64 OGID=4;
+}
+
+message VpRes{
+    int64 Id=1;
+    float FinalPrice=2;
+    string PaymentMethod=3;
+    string PaymentStatus=4;
+}

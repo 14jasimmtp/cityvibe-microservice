@@ -1,0 +1,168 @@
+syntax="proto3";
+
+
+option go_package="./pb";
+
+package user;
+
+service UserService {
+  rpc AddAddress(AddAddressRequest) returns (AddAddressResponse);
+  rpc ViewUserAddress(ViewUserAddressRequest) returns (ViewUserAddressResponse);
+  rpc UserProfile(UserProfileRequest) returns (UserProfileResponse);
+  rpc Signup(UserSignupReq) returns (UserSignupRes) {};
+  rpc UserLogin(UserLoginReq) returns (UserLoginRes) {};
+  rpc UserLogout(NoParam) returns (UserLogoutRes) {};
+}
+
+message ForgotPasswordRequest {
+  string phone = 1;
+}
+
+message ResetForgottenPasswordRequest {
+  string phone = 1;
+  string otp = 2;
+  string new_password = 3;
+}
+
+message User {
+  uint64 id = 1 ;
+  string firstname = 2;
+  string lastname = 3;
+  string email = 4 ;
+  string phone = 5;
+  string password = 6;
+  bool blocked = 7;
+  float wallet = 8;
+
+}
+
+message FindUserByPhoneRequest {
+  string phone = 1;
+}
+
+message FindUserByPhoneResponse {
+  User user = 1;
+  int64 status =2;
+
+}
+
+message Address {
+  string name = 1 ;
+  string house_name = 2 ;
+  string phone = 3 ;
+  string street = 4 ;
+  string city = 5 ;
+  string state = 6;
+  string pin = 7;
+}
+
+message AddAddressRequest {
+  Address address = 1;
+  string token = 2;
+}
+
+message AddressRes{
+  int64 id = 1;
+  string name = 2 ;
+  string house_name = 3 ;
+  string phone = 4 ;
+  string street = 5 ;
+  string city = 6 ;
+  string state = 7;
+  string pin = 8;
+  int64 status =9;
+}
+
+message AddAddressResponse {
+  AddressRes address = 1;
+  int64 status =2;
+
+}
+
+message ViewUserAddressRequest {
+  string token = 1;
+}
+
+message ViewUserAddressResponse {
+  repeated AddressRes addresses = 1;
+  int64 status =2;
+
+}
+
+message UpdateAddressRequest {
+  string token = 1;
+  string aid = 2;
+  Address new_address = 3;
+}
+
+message UpdateAddressResponse {
+  AddressRes address = 1;
+  int64 status =2;
+
+}
+
+message DeleteAddressRequest {
+  string token = 1;
+  string aid = 2;
+}
+
+message UserProfileRequest {
+  string token = 1;
+}
+
+message UserProfile{
+  string firstname=1;
+  string lastname=2;
+  string email=3;
+  string phone=4;
+  float wallet=5;
+}
+
+message UserProfileResponse {
+  UserProfile user_profile = 1;
+  int64 status =2;
+
+}
+
+message UpdateUserProfileRequest {
+  string token = 1;
+  UserProfile user_profile = 2;
+}
+
+message UpdateUserProfileResponse {
+  UserProfile updated_user_profile = 1;
+  int64 status =2;
+
+}
+
+
+message UserSignupReq{
+  string FirstName=1;
+  string LastName=2;
+  string Email=3;
+  string Phone=4;
+  string Password=5;
+  string ConfirmPassword=6;
+}
+
+message UserSignupRes{
+  string message=1;
+}
+
+
+message UserLoginReq{
+  string Phone=1;
+  string Password=2;
+}
+
+message UserLoginRes{
+  string message=1;
+  User user=2;
+  string error=3; //Optional
+}
+
+message NoParam {}
+
+message UserLogoutRes{
+  string message=1;
+}

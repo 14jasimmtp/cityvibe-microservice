@@ -1,0 +1,51 @@
+syntax="proto3";
+
+option go_package="./pb";
+
+service ProductService{
+    rpc  AddProduct(AddProductReq) returns (AddProductRes) {};
+    rpc DeleteProduct(DeleteProductReq) returns(DeleteProductRes) {};
+    rpc GetAllProducts(NoParam) returns (GetAllProductsRes) {};
+    rpc GetSingleProduct(GetSingleProductReq) returns (GetSingleProductRes) {};
+}
+
+message AddProductReq{
+    string Name=1;
+    string Description=2;
+    int64 CategoryId=3;
+    int64 size=4;
+    int64 stock=5;
+    float Price=6;
+    string color=7;
+}
+
+message AddProductRes{
+    int64 Id=1;
+    string Name=2;
+    string Description=3;
+    int64 CategoryId=4;
+    int64 size=5;
+    int64 stock=6;
+    float Price=7;
+    string color=8;
+}
+
+message DeleteProductReq{
+    int64 Pid=1;
+}
+
+message DeleteProductRes{}
+
+message NoParam{}
+
+message GetAllProductsRes{
+    repeated AddProductRes product=1;
+}
+
+message GetSingleProductReq{
+    int64 Pid =1;
+}
+
+message GetSingleProductRes{
+    AddProductRes product=1;
+}

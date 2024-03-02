@@ -1,0 +1,91 @@
+syntax = "proto3";
+
+package admin;
+
+option go_package="./pkg/admin_service/pb";
+
+service AdminService{
+    rpc AdminLogin(AdminLoginReq) returns (AdminLoginRes) {};
+    rpc GetAllUsers(GetAllUsersReq) returns (GetAllUsersRes) {};
+    rpc BlockUser(BlockUserReq) returns (NoParam) {};
+    rpc UnBlockUser(UnBlockUserReq) returns (NoParam) {};
+    rpc DashBoard(NoParam) returns (DashBoardRes) {};
+}
+
+message User {
+    uint64 id = 1 ;
+    string firstname = 2;
+    string lastname = 3;
+    string email = 4 ;
+    string phone = 5;
+    string password = 6;
+    bool blocked = 7;
+    float wallet = 8;
+  
+}
+
+message GetAllUsersReq{
+}
+
+message GetAllUsersRes{
+    repeated User users=1;
+    int32 status=2;
+}
+
+message AdminLoginReq{
+    string Email=1;
+    string Password=2;
+}
+
+message AdminLoginRes{
+    string message=1;
+}
+
+message NoParam{}
+
+message BlockUserReq{
+    string id=1;
+}
+
+message UnBlockUserReq{
+    string id=2;
+}
+
+
+message DashBoardUser {
+    int32 TotalUsers = 1;
+    repeated int32 BlockedUser = 2;
+  }
+  
+  message DashBoardProduct {
+    int32 TotalProducts = 1;
+    repeated int32 OutofStockProductID = 2;
+    repeated int32 LowStockProductsID = 3;
+  }
+  
+  message DashboardOrder {
+    int32 DeliveredOrderProducts = 1;
+    int32 PendingOrderProducts = 2;
+    int32 CancelledOrderProducts = 3;
+    int32 TotalOrderItems = 4;
+    int32 TotalOrderQuantity = 5;
+  }
+  
+  message DashboardRevenue {
+    double TodayRevenue = 1;
+    double MonthRevenue = 2;
+    double YearRevenue = 3;
+  }
+  
+  message DashboardAmount {
+    double CreditedAmount = 1;
+    double PendingAmount = 2;
+  }
+  
+  message DashBoardRes {
+    DashBoardUser DashboardUser = 1;
+    DashBoardProduct DashboardProduct = 2;
+    DashboardOrder DashboardOrder = 3;
+    DashboardRevenue DashboardRevenue = 4;
+    DashboardAmount DashboardAmount = 5;
+  }

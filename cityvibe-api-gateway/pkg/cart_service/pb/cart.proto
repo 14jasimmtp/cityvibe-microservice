@@ -1,0 +1,48 @@
+syntax="proto3";
+
+option go_package="./pkg/cart_service/pb";
+
+
+service CartService{
+    rpc ViewCart(ViewCartRequest) returns (ViewCartResponse);
+    rpc AddToCart(AddToCartRequest) returns (AddToCartResponse);
+    rpc RemoveProductsFromCart(RemoveProductsFromCartRequest) returns (RemoveProductsFromCartResponse);
+}
+
+
+message ViewCartRequest{
+    string Token=1;
+}
+message Cart{
+    int64 ProductID=1;
+    string ProductName=2;
+    string Category=3;
+    int64 Quantity=4;
+    float Price=5;
+    float FinalPrice=6;
+}
+message ViewCartResponse{
+    float TotalPrice=1;
+    repeated Cart cart=2;
+}
+
+message AddToCartRequest{
+    string Token=1;
+    string Pid=2;
+}
+
+message AddToCartResponse{
+    float TotalPrice=1;
+    repeated Cart cart=2;
+}
+
+message RemoveProductsFromCartRequest{
+    string Token=1;
+    string id=2;
+}
+
+message RemoveProductsFromCartResponse{
+    float TotalPrice=1;
+    repeated Cart cart=2;
+}
+

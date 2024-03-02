@@ -1,0 +1,106 @@
+syntax="proto3";
+
+option go_package="./pkg/order_service/pb";
+
+service OrderService{
+    rpc ExecutePurchase(ExecutePurchaseReq) returns (ExecutePurchaseResponse) {};
+    rpc ExecutePurchaseWallet(ExecutePurchaseWalletReq) returns (ExecutePurchaseWalletRes) {};
+    rpc CheckOut(CheckOutReq) returns (CheckOutRes) {};
+    rpc ViewUserOrders(ViewUserOrdersReq) returns (ViewUserOrdersRes) {};
+    rpc CancelOrder(CancelOrderReq) returns (CancelOrderRes) {};
+}
+
+message Checkout{
+    int64 AddressId=1;
+    int64 PaymentId=2;
+}
+
+message ExecutePurchaseReq{
+    string Token=1;
+    Checkout OrderInput=2;
+}
+
+
+message ExecutePurchaseResponse{
+    int64 OrderId=1;
+    string Paymentmthd=2;
+    float TotalAmount=3;
+    string PaymentStatus=4;
+}
+
+message ExecutePurchaseWalletReq{
+    string Token=1;
+    Checkout OrderInput=2;
+}
+
+message ExecutePurchaseWalletRes{
+    int64 OrderId=1;
+    string Paymentmthd=2;
+    float TotalAmount=3;
+    string PaymentStatus=4;
+}
+
+message CheckOutReq{
+    string Token=1;
+}
+
+message Carts{
+    int64 ProductID=1;
+    string ProductName=2;
+    string Category=3;
+    int64 Quantity=4;
+    float Price=5;
+    float FinalPrice=6;
+}
+
+message Addresss{
+    int64 id = 1;
+    string name = 2 ;
+    string house_name = 3 ;
+    string phone = 4 ;
+    string street = 5 ;
+    string city = 6 ;
+    string state = 7;
+    string pin = 8;
+    int64 status =9;
+  }
+
+message CheckOutRes{
+    repeated Addresss address=1;
+    repeated Carts cart=2;
+    float TotalAmount=3;
+    float DiscountAmount=4;
+}
+
+message ViewUserOrdersReq{
+    string Token=1;
+}
+
+message OrderDetails {
+    int32 id = 1;
+    float final_price = 2;
+    string payment_method = 3;
+    string payment_status = 4;
+}
+  
+message OrderProductDetails {
+    uint32 product_id = 1;
+    string product_name = 2;
+    string order_status = 3;
+    int32 quantity = 4;
+    float total_price = 5;
+}
+
+message ViewUserOrdersRes{
+    OrderDetails order_details = 1;
+    repeated OrderProductDetails order_product_details = 2;
+}
+
+message CancelOrderReq{
+    string Token=1;
+    string OrderId=2;
+    string ProductId=3;
+}
+
+message CancelOrderRes{}
+
